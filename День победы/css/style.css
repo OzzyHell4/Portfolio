@@ -1,0 +1,258 @@
+@import url(/css/reset.css);
+@import url(/css/adaptive.css);
+
+@font-face {
+    font-family: pobeda-bold;
+    src: url(/fonts/Pobeda/pobeda-bold.ttf);
+}
+
+@font-face {
+    font-family: pobeda-regular;
+    src: url(/fonts/Pobeda/pobeda-regular.ttf);
+
+}
+
+.body{
+    font-family: 'pobeda-bold';
+}
+
+
+/**************** HEADER *************/
+
+.header{
+    display: flex;
+    justify-content: center;
+}
+
+.nav{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.anchor{
+    margin-left: 40px;
+    color: #000;
+    opacity: 0.7;
+    font-size: 30px;
+    font-family: Pobeda-Bold;
+}
+
+/**************** FIRST-PAGE *************/
+
+.first-page{
+    background-image: url(/img/banner-bg.jpg);
+    background-position: center;
+    background-size: cover;
+    color: #ffffff85;
+    height: 918px;
+    display: flex;
+    place-items: center;
+    font-family: Pobeda-Bold;
+    justify-content: center;
+}
+
+.title{
+    text-align: center;
+}
+
+.name{
+    font-size: 140px;
+}
+
+.date{
+    font-size: 130px;
+    color: #ffffff85;
+}
+
+@media screen and (max-width: 940px) {
+    .first-page h1{
+        font-size: 95px;
+    }
+
+    .first-page h2{
+        font-size: 60px;
+    }
+}
+
+@media screen and (max-width: 690px) {
+    .first-page h1{
+        font-size: 70px;
+    }
+
+    .first-page h2{
+        font-size: 35px;
+    }
+}
+
+
+/**************** INFO *************/
+
+.info{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+h2{
+    font-size: 40px;
+    color: #514f4f;
+}
+
+.select{
+    color: #fff;
+    background-color: #ff0000;
+}
+
+
+/**************** Слайдер *************/
+
+.carousel-inner{
+    max-height: 95vh;
+}
+
+.d-block{
+    max-height: 95vh;
+    transform: scale(1);
+
+}
+
+.carousel-caption{
+    margin-top: 10px;
+}
+
+.carousel-text{
+    max-width: 900px;
+    font-size: 20px;
+    background-color: #fff;
+    opacity: 0.8;
+}
+
+.display-4{
+    background-color: #ff0000;
+    max-width: 700px;
+}
+
+.carousel-note{
+    background-color: #000;
+    color: #fff;
+}
+
+/**************** ГЕМОРОЙ *************/
+.herow-familia{
+    text-align: center;
+}
+.qoute{
+
+}
+
+
+.herow-img{
+    width: 300px;
+    height: 300px;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: center;
+}
+
+.info-herow{
+    width: 700px;
+}
+
+.herow-town{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #e9e0e0;
+}
+
+
+.color-1{
+    background-color: #ff0000;
+    color: #fff;
+}
+
+.herow-town-picture{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: start;
+}
+
+
+.moscow{
+    margin-bottom: 20px;
+    width: 400px;
+    height: 600px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.moscow-inner{
+    border-radius: 5px 5px 0 0;
+    width: 400px;
+    height: 400px;
+}
+
+.card-body{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
+}
+
+.href-inf{
+    margin-bottom: 10px;
+    text-align: center;
+    width: 150px;
+    background-color: #000;
+    color: #fff;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.href{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    background-color: #e9e0e0;
+}
+
+.all{
+    font-size: 25px;
+    color: #000;
+    margin-right: 60px;
+}
+
+.footer{
+    width: 100%;
+    text-align: center;
+}
+
+.pechora{
+    color: #000;
+}
+
+.may{
+    color: #000;
+}
+
+
+
+/**************** ГОРОДА ГЕРОИ ВТОРАЯ СТРАНИЦА *************/
+
+
