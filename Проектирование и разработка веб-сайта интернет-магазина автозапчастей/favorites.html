@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Избранное | Auto Parts Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .favorites-wrapper {
+      max-width: 1100px;
+      margin: 48px auto 0 auto;
+      min-height: 600px;
+    }
+    .favorites-title {
+      color: #fff;
+      font-size: 2em;
+      font-weight: 500;
+      margin-bottom: 36px;
+    }
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px 28px;
+      margin-top: 32px;
+    }
+    @media (max-width: 1200px) {
+      .favorites-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 700px) {
+      .favorites-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__top">
+      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+        <i class="fa-solid fa-gear"></i>
+        <span>AUTO PARTS<br>STORE</span>
+      </a>
+      <form class="search-bar">
+        <input type="text" placeholder="Поиск по каталогу">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <div class="header__icons">
+        <a href="favorites.html"><i class="fa-regular fa-heart" style="text-decoration: none; color: #fff;"></i></a>
+        <a href="register.html"><i class="fa-solid fa-cart-shopping" style="text-decoration: none; color: #fff;"></i></a>
+        <a href="signup.html"><i class="fa-regular fa-user" style="text-decoration: none; color: #fff;"></i></a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="favorites-wrapper">
+      <div class="favorites-title">Избранное</div>
+      <div class="favorites-grid" id="favoritesGrid">
+        <!-- Динамически добавляемые карточки -->
+      </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer__contacts">
+      <h4>Контакты</h4>
+      <ul>
+        <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+        <li>Email: info@вашсайт.ру</li>
+        <li>График работы: Пн-Пт: 9:00-18:00</li>
+      </ul>
+    </div>
+    <div class="footer__about">
+      <h4>О компании</h4>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 Название компании</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+  <script>
+  function getFavorites() {
+    return JSON.parse(localStorage.getItem('favorites') || '[]');
+  }
+  function renderFavorites() {
+    const grid = document.getElementById('favoritesGrid');
+    const favs = getFavorites();
+    grid.innerHTML = '';
+    if (!favs.length) {
+      grid.innerHTML = '<div style="color:#fff;font-size:1.2em;">Нет избранных товаров</div>';
+      return;
+    }
+    favs.forEach(prod => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class="product-photo">${prod.img ? `<img src='${prod.img}' alt='Фото' style='max-width:100%;max-height:100%;border-radius:8px;'>` : 'ФОТО ТОВАРА'}</div>
+        <div class="product-title">${prod.title}</div>
+        <div class="product-desc">${prod.desc||''}</div>
+        <div class="product-price">${prod.price}руб</div>
+        <div class="product-card-btn-row">
+          <button class="add-to-cart-btn" data-title="${prod.title}" data-price="${prod.price}">Добавить в корзину</button>
+          <button class="add-to-fav-btn" data-title="${prod.title}" title="Удалить из избранного" style="margin-left:12px;background:none;border:none;cursor:pointer;font-size:1.5em;color:#e53935;">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+      card.querySelector('.add-to-fav-btn').onclick = function() {
+        let favs = getFavorites();
+        favs = favs.filter(fav => fav.title !== prod.title);
+        localStorage.setItem('favorites', JSON.stringify(favs));
+        renderFavorites();
+      };
+      card.querySelector('.add-to-cart-btn').onclick = function() {
+        if (typeof addToCart === 'function') addToCart(prod.title, prod.price);
+        const modal = document.getElementById('cart-modal');
+        if (modal) {
+          modal.style.display = 'flex';
+          document.getElementById('cart-modal-text').textContent = `Товар "${prod.title}" добавлен в корзину!`;
+          document.getElementById('cart-modal-close').onclick = function() {
+            modal.style.display = 'none';
+          };
+          modal.onclick = function(e) {
+            if (e.target === modal) modal.style.display = 'none';
+          };
+        }
+      };
+    });
+  }
+  document.addEventListener('DOMContentLoaded', renderFavorites);
+  </script>
+</body>
+</html> 

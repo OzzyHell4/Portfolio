@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Вход | Auto Parts Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .login-wrapper {
+      max-width: 540px;
+      margin: 64px auto 0 auto;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .login-title {
+      color: #fff;
+      font-size: 2em;
+      font-weight: 500;
+      margin-bottom: 36px;
+      text-align: left;
+      width: 100%;
+    }
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .login-form input {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 12px;
+      background: #888;
+      color: #fff;
+      font-size: 1.1em;
+      outline: none;
+      margin-bottom: 0;
+      transition: background 0.2s;
+    }
+    .login-form input:focus {
+      background: #aaa;
+    }
+    .login-btn {
+      background: #4a6cf7;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px 0;
+      font-size: 1.15em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.2s;
+    }
+    .login-btn:hover {
+      background: #274bb5;
+    }
+    .login-error {
+      color: #e53935;
+      font-size: 1em;
+      margin-bottom: 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__top">
+      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+        <i class="fa-solid fa-gear"></i>
+        <span>AUTO PARTS<br>STORE</span>
+      </a>
+      <form class="search-bar">
+        <input type="text" placeholder="Поиск по каталогу">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <div class="header__icons">
+        <a href="favorites.html"><i class="fa-regular fa-heart"></i></a>
+        <a href="register.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="login.html"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="login-wrapper">
+      <div class="login-title">Вход в аккаунт</div>
+      <form class="login-form" id="loginForm" autocomplete="off">
+        <input type="email" id="login-email" placeholder="e-mail" required>
+        <input type="password" id="login-password" placeholder="Пароль" required>
+        <div class="login-error" id="loginError"></div>
+        <button type="submit" class="login-btn">Войти</button>
+        <div style="margin-top:12px;color:#fff;font-size:0.98em;">Нет аккаунта? <a href="signup.html" style="color:#ffe9b0;">Зарегистрироваться</a></div>
+      </form>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer__contacts">
+      <h4>Контакты</h4>
+      <ul>
+        <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+        <li>Email: info@вашсайт.ру</li>
+        <li>График работы: Пн-Пт: 9:00-18:00</li>
+      </ul>
+    </div>
+    <div class="footer__about">
+      <h4>О компании</h4>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 Название компании</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value;
+      const error = document.getElementById('loginError');
+      error.textContent = '';
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      if (!user || user.email !== email || user.password !== pass) {
+        error.textContent = 'Неверный e-mail или пароль';
+        return;
+      }
+      // Сохраняем сессию пользователя
+      localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
+      window.location.href = 'profile.html';
+    });
+  </script>
+</body>
+</html> 

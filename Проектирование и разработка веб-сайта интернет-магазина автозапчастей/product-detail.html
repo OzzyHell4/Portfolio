@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Товар | Auto Parts Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .product-detail-wrapper {
+      max-width: 800px;
+      margin: 64px auto 0 auto;
+      background: #232323;
+      border-radius: 18px;
+      border: 2px solid #ffe9b0;
+      box-shadow: 0 4px 32px #000a;
+      padding: 40px 32px 32px 32px;
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+    }
+    .product-detail-img {
+      width: 320px;
+      height: 240px;
+      background: #19191b;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-detail-img img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 12px;
+    }
+    .product-detail-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .product-detail-title {
+      color: #fff;
+      font-size: 2em;
+      font-weight: 700;
+    }
+    .product-detail-desc {
+      color: #fff;
+      font-size: 1.1em;
+      margin-bottom: 8px;
+    }
+    .product-detail-price {
+      color: #ffe9b0;
+      font-size: 1.3em;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .product-detail-btns {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    .add-to-cart-btn {
+      background: #4a6cf7;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 12px 36px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .add-to-cart-btn:hover {
+      background: #274bb5;
+    }
+    .add-to-fav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 2em;
+      color: #ffe9b0;
+      transition: color 0.2s;
+    }
+    .add-to-fav-btn.fav {
+      color: #e53935;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__top">
+      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+        <i class="fa-solid fa-gear"></i>
+        <span>AUTO PARTS<br>STORE</span>
+      </a>
+      <form class="search-bar">
+        <input type="text" placeholder="Поиск по каталогу">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <div class="header__icons">
+        <a href="favorites.html"><i class="fa-regular fa-heart"></i></a>
+        <a href="register.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="signup.html"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div id="productDetail"></div>
+  </main>
+  <footer class="footer">
+    <div class="footer__contacts">
+      <h4>Контакты</h4>
+      <ul>
+        <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+        <li>Email: info@вашсайт.ру</li>
+        <li>График работы: Пн-Пт: 9:00-18:00</li>
+      </ul>
+    </div>
+    <div class="footer__about">
+      <h4>О компании</h4>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 Название компании</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+  <div id="cart-modal" style="display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:999;align-items:center;justify-content:center;">
+    <div style="background:#232323;padding:36px 48px;border-radius:16px;box-shadow:0 4px 32px #000a;border:2px solid #ffe9b0;color:#fff;font-size:1.2em;display:flex;flex-direction:column;align-items:center;gap:18px;min-width:260px;">
+      <span id="cart-modal-text">Товар добавлен в корзину!</span>
+      <button id="cart-modal-close" style="margin-top:10px;padding:8px 24px;border-radius:8px;border:none;background:#ffe9b0;color:#232323;font-weight:600;font-size:1em;cursor:pointer;">OK</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+    function getProducts() {
+      return JSON.parse(localStorage.getItem('products') || '[]');
+    }
+    function getFavorites() {
+      return JSON.parse(localStorage.getItem('favorites') || '[]');
+    }
+    function setFavorites(arr) {
+      localStorage.setItem('favorites', JSON.stringify(arr));
+    }
+    function isFavorite(title) {
+      return getFavorites().some(fav => fav.title === title);
+    }
+    function addToFavorites(product) {
+      let favs = getFavorites();
+      if (!favs.some(fav => fav.title === product.title)) {
+        favs.push(product);
+        setFavorites(favs);
+      }
+    }
+    function removeFromFavorites(title) {
+      let favs = getFavorites();
+      favs = favs.filter(fav => fav.title !== title);
+      setFavorites(favs);
+    }
+    function renderProductDetail() {
+      const container = document.getElementById('productDetail');
+      const id = getQueryParam('id');
+      const products = getProducts();
+      // Для простоты ищем по title (лучше по id, если есть)
+      const product = products.find(p => p.title === id);
+      if (!product) {
+        container.innerHTML = '<div style="color:#fff;font-size:1.3em;padding:40px;">Товар не найден</div>';
+        return;
+      }
+      container.innerHTML = `
+        <div class="product-detail-wrapper">
+          <div class="product-detail-img">${product.img ? `<img src='${product.img}' alt='Фото'>` : 'ФОТО ТОВАРА'}</div>
+          <div class="product-detail-info">
+            <div class="product-detail-title">${product.title}</div>
+            <div class="product-detail-desc">${product.desc||''}</div>
+            <div class="product-detail-price">${product.price} руб</div>
+            <div class="product-detail-btns">
+              <button class="add-to-cart-btn" data-title="${product.title}" data-price="${product.price}">Добавить в корзину</button>
+              <button class="add-to-fav-btn${isFavorite(product.title) ? ' fav' : ''}" data-title="${product.title}" title="В избранное">
+                <i class="fa${isFavorite(product.title) ? 's' : 'r'} fa-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      // Кнопки
+      container.querySelector('.add-to-cart-btn').onclick = function() {
+        if (typeof addToCart === 'function') addToCart(product.title, product.price);
+        const modal = document.getElementById('cart-modal');
+        if (modal) {
+          modal.style.display = 'flex';
+          document.getElementById('cart-modal-text').textContent = `Товар "${product.title}" добавлен в корзину!`;
+          document.getElementById('cart-modal-close').onclick = function() {
+            modal.style.display = 'none';
+          };
+          modal.onclick = function(e) {
+            if (e.target === modal) modal.style.display = 'none';
+          };
+        }
+      };
+      container.querySelector('.add-to-fav-btn').onclick = function() {
+        if (isFavorite(product.title)) {
+          removeFromFavorites(product.title);
+        } else {
+          addToFavorites(product);
+        }
+        renderProductDetail();
+      };
+    }
+    document.addEventListener('DOMContentLoaded', renderProductDetail);
+  </script>
+</body>
+</html> 

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки профиля | Auto Parts Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      .profile-wrapper {
+        display: flex;
+        gap: 32px;
+        margin: 48px auto 0 auto;
+        max-width: 1100px;
+        min-height: 600px;
+      }
+      .profile-sidebar {
+        background: #232323;
+        border-radius: 12px;
+        border: 2px solid #393939;
+        min-width: 320px;
+        padding: 32px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        height: fit-content;
+      }
+      .profile-avatar {
+        width: 110px;
+        height: 110px;
+        background: #bdbdbd;
+        border-radius: 50%;
+        margin-bottom: 32px;
+      }
+      .profile-menu {
+        width: 80%;
+        padding: 14px 0;
+        margin: 0 0 6px 0;
+        background: none;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1.08em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+      }
+      .profile-menu.active,
+      .profile-menu:hover:not(.logout) {
+        background: #ffe9b0;
+        color: #232323;
+      }
+      .profile-menu.logout {
+        color: #e53935;
+        font-weight: 700;
+        margin-top: 18px;
+      }
+      .profile-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-width: 0;
+      }
+      .settings-form {
+        background: #232323;
+        border: 2px solid #ffe9b0;
+        border-radius: 14px;
+        padding: 32px;
+        min-height: 480px;
+      }
+      .settings-form h2 {
+        color: #fff;
+        font-size: 1.4em;
+        margin: 0 0 32px 0;
+        font-weight: 600;
+      }
+      .form-group {
+        margin-bottom: 24px;
+      }
+      .form-group label {
+        display: block;
+        color: #fff;
+        margin-bottom: 8px;
+        font-size: 1.05em;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #393939;
+        border-radius: 8px;
+        background: #232323;
+        color: #fff;
+        font-size: 1em;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+      .form-group input:focus {
+        border-color: #ffe9b0;
+      }
+      .save-button {
+        background: #ffe9b0;
+        color: #232323;
+        border: none;
+        border-radius: 8px;
+        padding: 14px 32px;
+        font-size: 1.05em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        margin-top: 16px;
+      }
+      .save-button:hover {
+        background: #ffd980;
+      }
+      @media (max-width: 900px) {
+        .profile-wrapper { flex-direction: column; max-width: 98vw; gap: 16px; }
+        .profile-sidebar { min-width: unset; width: 100%; flex-direction: row; justify-content: space-around; padding: 16px 0; }
+        .profile-avatar { margin-bottom: 0; }
+        .settings-form { padding: 20px; }
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__top">
+            <div class="logo">
+                <i class="fa-solid fa-gear"></i>
+                <span>AUTO PARTS<br>STORE</span>
+            </div>
+            <form class="search-bar">
+                <input type="text" placeholder="Поиск по каталогу">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="header__icons">
+                <a href="favorites.html"><i class="fa-regular fa-heart" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="register.html"><i class="fa-solid fa-cart-shopping" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="signup.html"><i class="fa-regular fa-user" style="text-decoration: none; color: #fff;"></i></a>
+            </div>
+        </div>
+    </header>
+    <main>
+      <div class="profile-wrapper">
+        <aside class="profile-sidebar">
+          <div class="profile-avatar"></div>
+          <a href="profile.html" class="profile-menu">История заказов</a>
+          <a href="support-chat.html" class="profile-menu">Чат поддержки</a>
+          <a href="settings.html" class="profile-menu active">Настройки</a>
+          <button class="profile-menu logout">Выйти</button>
+        </aside>
+        <section class="profile-content">
+          <form class="settings-form" id="settingsForm">
+            <h2>Настройки профиля</h2>
+            <div class="form-group">
+              <label for="name">Имя</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Телефон</label>
+              <input type="tel" id="phone" name="phone" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Новый пароль</label>
+              <input type="password" id="password" name="password">
+            </div>
+            <button type="submit" class="save-button">Сохранить изменения</button>
+          </form>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__contacts">
+            <h4>Контакты</h4>
+            <ul>
+                <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+                <li>Email: info@вашсайт.ру</li>
+                <li>График работы: Пн-Пт: 9:00-18:00</li>
+            </ul>
+        </div>
+        <div class="footer__about">
+            <h4>О компании</h4>
+        </div>
+        <div class="footer__bottom">
+            <span>© 2024 Название компании</span>
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+    </footer>
+    <script>
+      // Автозаполнение формы из localStorage
+      document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.name) document.getElementById('name').value = user.name;
+        if (user.email) document.getElementById('email').value = user.email;
+        if (user.phone) document.getElementById('phone').value = user.phone;
+      });
+      // Сохранение изменений
+      const settingsForm = document.getElementById('settingsForm');
+      settingsForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const password = document.getElementById('password').value;
+        let user = JSON.parse(localStorage.getItem('user') || '{}');
+        user.name = name;
+        user.email = email;
+        user.phone = phone;
+        if (password) user.password = password;
+        localStorage.setItem('user', JSON.stringify(user));
+        alert('Настройки успешно сохранены!');
+      });
+      // --- Logout handler ---
+      const logoutBtn = document.querySelector('.profile-menu.logout');
+      if (logoutBtn) {
+        logoutBtn.onclick = function() {
+          localStorage.removeItem('currentUser');
+          window.location.href = 'login.html';
+        };
+      }
+    </script>
+</body>
+</html> 

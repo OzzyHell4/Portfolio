@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товары | Auto Parts Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      body {
+        background: #232323;
+      }
+      .product-cards-page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding-top: 60px;
+      }
+      .product-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 36px 28px;
+        margin-bottom: 32px;
+      }
+      .product-card {
+        width: 320px;
+        height: 400px;
+        background: #19191b;
+        border: 2px solid #ffe9b0;
+        border-radius: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        box-sizing: border-box;
+      }
+      .product-photo {
+        width: 100%;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.1em;
+        border-radius: 12px 12px 0 0;
+        background: #232323;
+        border-bottom: 1px solid #ffe9b0;
+      }
+      .product-title {
+        font-weight: 600;
+        font-size: 1.1em;
+        margin: 12px 0 0 18px;
+        align-self: flex-start;
+        color: #fff;
+      }
+      .product-desc {
+        font-size: 0.98em;
+        color: #fff;
+        margin: 8px 0 0 18px;
+        align-self: flex-start;
+      }
+      .product-price {
+        width: 100%;
+        color: #fff;
+        font-size: 1.1em;
+        padding: 18px 0 0 18px;
+        font-weight: 500;
+        text-align: left;
+      }
+      .product-card-btn-row {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        padding-left: 18px;
+        margin-top: 18px;
+      }
+      .add-to-cart-btn {
+        background: #4a6cf7;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 32px;
+        font-size: 1em;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .add-to-cart-btn:hover {
+        background: #274bb5;
+      }
+      @media (max-width: 1200px) {
+        .product-cards-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 700px) {
+        .product-cards-grid {
+          grid-template-columns: 1fr;
+        }
+        .product-card {
+          width: 95vw;
+          min-width: 0;
+        }
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__top">
+            <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+                <i class="fa-solid fa-gear"></i>
+                <span>AUTO PARTS<br>STORE</span>
+            </a>
+            <form class="search-bar">
+                <input type="text" placeholder="Поиск по каталогу">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="header__icons">
+                <a href="favorites.html"><i class="fa-regular fa-heart" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="register.html"><i class="fa-solid fa-cart-shopping" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="signup.html"><i class="fa-regular fa-user" style="text-decoration: none; color: #fff;"></i></a>
+            </div>
+        </div>
+    </header>
+    <main>
+      <div class="product-cards-page">
+        <div style="margin-bottom:28px;display:flex;gap:18px;align-items:center;background:#19191b;padding:18px 28px;border-radius:12px;box-shadow:0 2px 12px #0003;">
+          <span style="color:#fff;font-size:1.05em;">Сортировка по цене:</span>
+          <button type="button" id="sortPriceAsc" style="background:#ffe9b0;color:#232323;font-weight:600;padding:8px 22px;border:none;border-radius:8px;cursor:pointer;">Сначала дешевые</button>
+          <button type="button" id="sortPriceDesc" style="background:#ffe9b0;color:#232323;font-weight:600;padding:8px 22px;border:none;border-radius:8px;cursor:pointer;">Сначала дорогие</button>
+        </div>
+        <div class="product-cards-grid" id="productsGrid"></div>
+      </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__contacts">
+            <h4>Контакты</h4>
+            <ul>
+                <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+                <li>Email: info@вашсайт.ру</li>
+                <li>График работы: Пн-Пт: 9:00-18:00</li>
+            </ul>
+        </div>
+        <div class="footer__about">
+            <h4>О компании</h4>
+        </div>
+        <div class="footer__bottom">
+            <span>© 2024 Название компании</span>
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+    </footer>
+    <div id="cart-modal" style="display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:999;align-items:center;justify-content:center;">
+      <div style="background:#232323;padding:36px 48px;border-radius:16px;box-shadow:0 4px 32px #000a;border:2px solid #ffe9b0;color:#fff;font-size:1.2em;display:flex;flex-direction:column;align-items:center;gap:18px;min-width:260px;">
+        <span id="cart-modal-text">Товар добавлен в корзину!</span>
+        <button id="cart-modal-close" style="margin-top:10px;padding:8px 24px;border-radius:8px;border:none;background:#ffe9b0;color:#232323;font-weight:600;font-size:1em;cursor:pointer;">OK</button>
+      </div>
+    </div>
+    <!-- Модальное окно для детального просмотра товара -->
+    <div id="product-modal" style="display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);z-index:1001;align-items:center;justify-content:center;">
+      <div id="product-modal-content" style="background:#232323;padding:36px 32px 32px 32px;border-radius:18px;box-shadow:0 4px 32px #000a;border:2px solid #ffe9b0;min-width:320px;max-width:95vw;max-height:90vh;overflow:auto;display:flex;gap:40px;align-items:flex-start;">
+        <!-- Контент товара будет добавляться через JS -->
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      // Динамическая отрисовка карточек товаров из localStorage
+      function getProducts() {
+        return JSON.parse(localStorage.getItem('products') || '[]');
+      }
+      function getFavorites() {
+        return JSON.parse(localStorage.getItem('favorites') || '[]');
+      }
+      function setFavorites(arr) {
+        localStorage.setItem('favorites', JSON.stringify(arr));
+      }
+      function isFavorite(title) {
+        return getFavorites().some(fav => fav.title === title);
+      }
+      function addToFavorites(product) {
+        let favs = getFavorites();
+        if (!favs.some(fav => fav.title === product.title)) {
+          favs.push(product);
+          setFavorites(favs);
+        }
+      }
+      function removeFromFavorites(title) {
+        let favs = getFavorites();
+        favs = favs.filter(fav => fav.title !== title);
+        setFavorites(favs);
+      }
+      let priceSort = null; // 'asc' | 'desc' | null
+      function renderProducts() {
+        const grid = document.getElementById('productsGrid');
+        let products = getProducts();
+        // сортировка по цене
+        if (priceSort === 'asc') {
+          products = products.slice().sort((a, b) => Number(a.price) - Number(b.price));
+        } else if (priceSort === 'desc') {
+          products = products.slice().sort((a, b) => Number(b.price) - Number(a.price));
+        }
+        grid.innerHTML = '';
+        if (!products.length) {
+          grid.innerHTML = '<div style="color:#fff;font-size:1.2em;">Нет товаров</div>';
+          return;
+        }
+        products.forEach((prod, idx) => {
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <div class="product-photo">${prod.img ? `<img src='${prod.img}' alt='Фото' style='max-width:100%;max-height:100%;border-radius:8px;'>` : 'ФОТО ТОВАРА'}</div>
+            <div class="product-title">${prod.title}</div>
+            <div class="product-desc">${prod.desc||''}</div>
+            <div class="product-price">${prod.price}руб</div>
+            <div class="product-card-btn-row">
+              <button class="add-to-cart-btn" data-title="${prod.title}" data-price="${prod.price}">Добавить в корзину</button>
+              <button class="add-to-fav-btn" data-title="${prod.title}" title="В избранное" style="margin-left:12px;background:none;border:none;cursor:pointer;font-size:1.5em;color:${isFavorite(prod.title) ? '#e53935' : '#ffe9b0'};">
+                <i class="fa${isFavorite(prod.title) ? 's' : 'r'} fa-heart"></i>
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+          // Добавить обработчик избранного
+          const favBtn = card.querySelector('.add-to-fav-btn');
+          favBtn.addEventListener('click', function() {
+            if (isFavorite(prod.title)) {
+              removeFromFavorites(prod.title);
+            } else {
+              addToFavorites(prod);
+            }
+            renderProducts(); // обновить иконку
+          });
+        });
+      }
+      document.getElementById('sortPriceAsc').onclick = function() {
+        priceSort = 'asc';
+        renderProducts();
+      };
+      document.getElementById('sortPriceDesc').onclick = function() {
+        priceSort = 'desc';
+        renderProducts();
+      };
+      renderProducts();
+      // --- Делегирование событий для кнопок 'Добавить в корзину' ---
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('add-to-cart-btn')) {
+          const btn = e.target;
+          const title = btn.getAttribute('data-title');
+          const price = btn.getAttribute('data-price');
+          if (typeof addToCart === 'function') addToCart(title, price);
+          // Модальное окно
+          const modal = document.getElementById('cart-modal');
+          if (modal) {
+            modal.style.display = 'flex';
+            document.getElementById('cart-modal-text').textContent = `Товар "${title}" добавлен в корзину!`;
+            document.getElementById('cart-modal-close').onclick = function() {
+              modal.style.display = 'none';
+            };
+            modal.onclick = function(e) {
+              if (e.target === modal) modal.style.display = 'none';
+            };
+          }
+        }
+      });
+      function showProductModal(product) {
+        const modal = document.getElementById('product-modal');
+        const content = document.getElementById('product-modal-content');
+        content.innerHTML = `
+          <div style='width:320px;height:240px;background:#19191b;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;'>
+            ${product.img ? `<img src='${product.img}' alt='Фото' style='max-width:100%;max-height:100%;border-radius:12px;'>` : 'ФОТО ТОВАРА'}
+          </div>
+          <div style='flex:1;display:flex;flex-direction:column;gap:18px;'>
+            <div style='color:#fff;font-size:2em;font-weight:700;'>${product.title}</div>
+            <div style='color:#fff;font-size:1.1em;'>${product.desc||''}</div>
+            <div style='color:#ffe9b0;font-size:1.3em;font-weight:600;margin-bottom:18px;'>${product.price} руб</div>
+            <div style='display:flex;gap:18px;align-items:center;'>
+              <button class="add-to-cart-btn" data-title="${product.title}" data-price="${product.price}" style="background:#4a6cf7;color:#fff;border:none;border-radius:6px;padding:12px 36px;font-size:1.1em;font-weight:600;cursor:pointer;">Добавить в корзину</button>
+              <button class="add-to-fav-btn${isFavorite(product.title) ? ' fav' : ''}" data-title="${product.title}" title="В избранное" style="background:none;border:none;cursor:pointer;font-size:2em;color:${isFavorite(product.title) ? '#e53935' : '#ffe9b0'};transition:color 0.2s;">
+                <i class="fa${isFavorite(product.title) ? 's' : 'r'} fa-heart"></i>
+              </button>
+            </div>
+          </div>
+          <button id="product-modal-close" style="position:absolute;top:18px;right:18px;background:none;border:none;color:#ffe9b0;font-size:2em;cursor:pointer;">&times;</button>
+        `;
+        modal.style.display = 'flex';
+        // Закрытие
+        document.getElementById('product-modal-close').onclick = function() {
+          modal.style.display = 'none';
+        };
+        modal.onclick = function(e) {
+          if (e.target === modal) modal.style.display = 'none';
+        };
+        // Кнопки внутри модалки
+        content.querySelector('.add-to-cart-btn').onclick = function() {
+          if (typeof addToCart === 'function') addToCart(product.title, product.price);
+          const cartModal = document.getElementById('cart-modal');
+          if (cartModal) {
+            cartModal.style.display = 'flex';
+            document.getElementById('cart-modal-text').textContent = `Товар "${product.title}" добавлен в корзину!`;
+            document.getElementById('cart-modal-close').onclick = function() {
+              cartModal.style.display = 'none';
+            };
+            cartModal.onclick = function(e) {
+              if (e.target === cartModal) cartModal.style.display = 'none';
+            };
+          }
+        };
+        content.querySelector('.add-to-fav-btn').onclick = function() {
+          if (isFavorite(product.title)) {
+            removeFromFavorites(product.title);
+          } else {
+            addToFavorites(product);
+          }
+          showProductModal(product);
+        };
+      }
+      // --- Открытие модалки по клику на карточку ---
+      document.addEventListener('click', function(e) {
+        const card = e.target.closest('.product-card');
+        if (card && card.parentElement && card.parentElement.id === 'productsGrid' && !e.target.classList.contains('add-to-cart-btn') && !e.target.classList.contains('add-to-fav-btn')) {
+          const title = card.querySelector('.product-title').textContent;
+          const products = getProducts();
+          const product = products.find(p => p.title === title);
+          if (product) showProductModal(product);
+        }
+      });
+    </script>
+</body>
+</html> 

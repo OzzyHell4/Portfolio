@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат поддержки | Auto Parts Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      .profile-wrapper {
+        display: flex;
+        gap: 32px;
+        margin: 48px auto 0 auto;
+        max-width: 1100px;
+        min-height: 600px;
+      }
+      .profile-sidebar {
+        background: #232323;
+        border-radius: 12px;
+        border: 2px solid #393939;
+        min-width: 320px;
+        padding: 32px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+        height: fit-content;
+      }
+      .profile-avatar {
+        width: 110px;
+        height: 110px;
+        background: #bdbdbd;
+        border-radius: 50%;
+        margin-bottom: 32px;
+      }
+      .profile-menu {
+        width: 80%;
+        padding: 14px 0;
+        margin: 0 0 6px 0;
+        background: none;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1.08em;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+      }
+      .profile-menu.active,
+      .profile-menu:hover:not(.logout) {
+        background: #ffe9b0;
+        color: #232323;
+      }
+      .profile-menu.logout {
+        color: #e53935;
+        font-weight: 700;
+        margin-top: 18px;
+      }
+      .profile-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        min-width: 0;
+      }
+      .support-chat-box {
+        background: #232323;
+        border: 2px solid #ffe9b0;
+        border-radius: 14px;
+        padding: 0;
+        min-height: 480px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .chat-messages {
+        flex: 1;
+        padding: 32px 24px 12px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        overflow-y: auto;
+      }
+      .chat-message {
+        display: inline-block;
+        max-width: 60%;
+        padding: 8px 18px;
+        border-radius: 18px;
+        background: #fff;
+        color: #232323;
+        font-size: 1.05em;
+        font-weight: 500;
+        margin-bottom: 4px;
+        word-break: break-word;
+      }
+      .chat-message.user {
+        align-self: flex-end;
+        background: #fff;
+        color: #232323;
+      }
+      .chat-message.support {
+        align-self: flex-start;
+        background: #fff;
+        color: #232323;
+      }
+      .chat-input-row {
+        display: flex;
+        align-items: center;
+        padding: 18px 18px 18px 18px;
+        border-top: 1.5px solid #ffe9b0;
+        background: #232323;
+        border-radius: 0 0 12px 12px;
+        gap: 10px;
+      }
+      .chat-input {
+        flex: 1;
+        padding: 12px 18px;
+        border-radius: 18px;
+        border: none;
+        background: #e0e0e0;
+        font-size: 1em;
+        outline: none;
+        font-family: inherit;
+        margin-right: 8px;
+      }
+      .chat-send-btn {
+        background: none;
+        border: none;
+        color: #a259ff;
+        font-size: 1.7em;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+      .chat-send-btn:hover {
+        color: #e53935;
+      }
+      @media (max-width: 900px) {
+        .profile-wrapper { flex-direction: column; max-width: 98vw; gap: 16px; }
+        .profile-sidebar { min-width: unset; width: 100%; flex-direction: row; justify-content: space-around; padding: 16px 0; }
+        .profile-avatar { margin-bottom: 0; }
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__top">
+            <div class="logo">
+                <i class="fa-solid fa-gear"></i>
+                <span>AUTO PARTS<br>STORE</span>
+            </div>
+            <form class="search-bar">
+                <input type="text" placeholder="Поиск по каталогу">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            <div class="header__icons">
+                <a href="favorites.html"><i class="fa-regular fa-heart" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="register.html"><i class="fa-solid fa-cart-shopping" style="text-decoration: none; color: #fff;"></i></a>
+                <a href="signup.html"><i class="fa-regular fa-user" style="text-decoration: none; color: #fff;"></i></a>
+            </div>
+        </div>
+    </header>
+    <main>
+      <div class="profile-wrapper">
+        <aside class="profile-sidebar">
+          <div class="profile-avatar"></div>
+          <a href="profile.html" class="profile-menu">История заказов</a>
+          <a href="support-chat.html" class="profile-menu active">Чат поддержки</a>
+          <a href="settings.html" class="profile-menu">Настройки</a>
+          <button class="profile-menu logout">Выйти</button>
+        </aside>
+        <section class="profile-content">
+          <div class="support-chat-box">
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-message user">Где мой заказ?</div>
+              <div class="chat-message support">Ваш заказ там-то тамт-то</div>
+              <div class="chat-message user">Спасибо</div>
+            </div>
+            <div style="display:flex;gap:12px;justify-content:center;padding:18px 0 8px 0;">
+              <button class="faq-btn" data-faq="Как оформить заказ?" style="background:#ffe9b0;color:#232323;font-weight:600;padding:8px 18px;border:none;border-radius:8px;cursor:pointer;">Как оформить заказ?</button>
+              <button class="faq-btn" data-faq="Как узнать статус заказа?" style="background:#ffe9b0;color:#232323;font-weight:600;padding:8px 18px;border:none;border-radius:8px;cursor:pointer;">Как узнать статус заказа?</button>
+            </div>
+            <form class="chat-input-row" id="chatForm" autocomplete="off">
+              <input type="text" class="chat-input" id="chatInput" placeholder="Сообщение" required>
+              <button type="submit" class="chat-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__contacts">
+            <h4>Контакты</h4>
+            <ul>
+                <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+                <li>Email: info@вашсайт.ру</li>
+                <li>График работы: Пн-Пт: 9:00-18:00</li>
+            </ul>
+        </div>
+        <div class="footer__about">
+            <h4>О компании</h4>
+            <p style="color:#ccc;font-size:0.98em;margin:8px 0 0 0;max-width:420px;">
+                Auto Parts Store — это современный интернет-магазин автозапчастей и аксессуаров для вашего автомобиля. Мы предлагаем широкий ассортимент товаров, быструю доставку и профессиональную поддержку. Работаем только с проверенными поставщиками и гарантируем качество каждой детали.
+            </p>
+        </div>
+        <div style="text-align:center;width:100%;margin:10px 0 0 0;font-size:1.05em;color:#ccc;">
+            © 2024 Название компании
+        </div>
+        <div class="footer__bottom">
+            <a href="#">Политика конфиденциальности</a>
+        </div>
+    </footer>
+    <script>
+      // Примитивная логика чата (без сервера)
+      const chatForm = document.getElementById('chatForm');
+      const chatInput = document.getElementById('chatInput');
+      const chatMessages = document.getElementById('chatMessages');
+      chatForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const text = chatInput.value.trim();
+        if (!text) return;
+        // Добавить сообщение пользователя
+        const userMsg = document.createElement('div');
+        userMsg.className = 'chat-message user';
+        userMsg.textContent = text;
+        chatMessages.appendChild(userMsg);
+        chatInput.value = '';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        // Имитация ответа поддержки
+        setTimeout(() => {
+          const supportMsg = document.createElement('div');
+          supportMsg.className = 'chat-message support';
+          supportMsg.textContent = 'Спасибо за обращение! Ожидайте ответа оператора.';
+          chatMessages.appendChild(supportMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 900);
+      });
+      // --- Logout handler ---
+      const logoutBtn = document.querySelector('.profile-menu.logout');
+      if (logoutBtn) {
+        logoutBtn.onclick = function() {
+          localStorage.removeItem('currentUser');
+          window.location.href = 'login.html';
+        };
+      }
+      // FAQ buttons logic
+      const faqAnswers = {
+        'Как оформить заказ?': 'Выберите нужные товары в каталоге, добавьте их в корзину и перейдите к оформлению заказа через корзину.',
+        'Как узнать статус заказа?': 'Статус заказа можно посмотреть в разделе «Профиль» — «История заказов».'
+      };
+      document.querySelectorAll('.faq-btn').forEach(btn => {
+        btn.onclick = function() {
+          const question = btn.getAttribute('data-faq');
+          const chatMessages = document.getElementById('chatMessages');
+          // Добавить вопрос от пользователя
+          const userMsg = document.createElement('div');
+          userMsg.className = 'chat-message user';
+          userMsg.textContent = question;
+          chatMessages.appendChild(userMsg);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+          // Добавить ответ поддержки
+          setTimeout(() => {
+            const supportMsg = document.createElement('div');
+            supportMsg.className = 'chat-message support';
+            supportMsg.textContent = faqAnswers[question] || 'Спасибо за вопрос! Ожидайте ответа оператора.';
+            chatMessages.appendChild(supportMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }, 500);
+        };
+      });
+    </script>
+</body>
+</html> 

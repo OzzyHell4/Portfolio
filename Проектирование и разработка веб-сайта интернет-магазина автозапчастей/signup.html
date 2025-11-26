@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация | Auto Parts Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .signup-wrapper {
+      max-width: 540px;
+      margin: 64px auto 0 auto;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .signup-title {
+      color: #fff;
+      font-size: 2em;
+      font-weight: 500;
+      margin-bottom: 36px;
+      text-align: left;
+      width: 100%;
+    }
+    .signup-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .signup-form input {
+      width: 100%;
+      padding: 16px 18px;
+      border: none;
+      border-radius: 12px;
+      background: #888;
+      color: #fff;
+      font-size: 1.1em;
+      outline: none;
+      margin-bottom: 0;
+      transition: background 0.2s;
+    }
+    .signup-form input:focus {
+      background: #aaa;
+    }
+    .signup-btn {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 16px 0;
+      font-size: 1.15em;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 18px;
+      transition: background 0.2s;
+    }
+    .signup-btn:hover {
+      background: #b71c1c;
+    }
+    .signup-error {
+      color: #e53935;
+      font-size: 1em;
+      margin-bottom: 0;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header__top">
+      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">
+        <i class="fa-solid fa-gear"></i>
+        <span>AUTO PARTS<br>STORE</span>
+      </a>
+      <form class="search-bar">
+        <input type="text" placeholder="Поиск по каталогу">
+        <button type="submit"><i class="fa fa-search"></i></button>
+      </form>
+      <div class="header__icons">
+        <a href="favorites.html"><i class="fa-regular fa-heart"></i></a>
+        <a href="register.html"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a href="signup.html"><i class="fa-regular fa-user"></i></a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="signup-wrapper">
+      <div class="signup-title">Заполните форму</div>
+      <form class="signup-form" id="signupForm" autocomplete="off">
+        <input type="text" id="signup-name" placeholder="Имя" required>
+        <input type="email" id="signup-email" placeholder="e-mail" required>
+        <input type="password" id="signup-password" placeholder="Пароль" required>
+        <input type="password" id="signup-password2" placeholder="Подтвердите пароль" required>
+        <div class="signup-error" id="signupError"></div>
+        <button type="submit" class="signup-btn">Подтвердить</button>
+      </form>
+    </div>
+  </main>
+  <footer class="footer">
+    <div class="footer__contacts">
+      <h4>Контакты</h4>
+      <ul>
+        <li>Телефон: +7 (XXX)XXX-XX-XX</li>
+        <li>Email: info@вашсайт.ру</li>
+        <li>График работы: Пн-Пт: 9:00-18:00</li>
+      </ul>
+    </div>
+    <div class="footer__about">
+      <h4>О компании</h4>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2024 Название компании</span>
+      <a href="#">Политика конфиденциальности</a>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('signup-name').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const pass = document.getElementById('signup-password').value;
+      const pass2 = document.getElementById('signup-password2').value;
+      const error = document.getElementById('signupError');
+      error.textContent = '';
+      if (!name || !email || !pass || !pass2) {
+        error.textContent = 'Заполните все поля';
+        return;
+      }
+      if (pass !== pass2) {
+        error.textContent = 'Пароли не совпадают';
+        return;
+      }
+      // Сохраняем пользователя в localStorage
+      localStorage.setItem('user', JSON.stringify({ name, email, password: pass }));
+      // Сохраняем сессию пользователя
+      localStorage.setItem('currentUser', JSON.stringify({ name, email }));
+      error.style.color = '#4caf50';
+      error.textContent = 'Регистрация успешна!';
+      setTimeout(() => { window.location.href = 'profile.html'; }, 1200);
+    });
+  </script>
+</body>
+</html> 
